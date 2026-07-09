@@ -1,4 +1,4 @@
-Swiggy-food-delivery-time-prediction-mlops
+food-delivery-time-prediction-mlops
 ==============================
 
 A MLOps end to end project to predict the food delivery time.
