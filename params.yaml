@@ -1,0 +1,22 @@
+Data_Preparation:
+  test_size: 0.20
+  random_state: 42
+
+
+Train:
+  Random_Forest:
+    'n_estimators': 206
+    'max_depth': 15
+    'max_features': None
+    'min_samples_split': 4
+    'min_samples_leaf': 8
+    'max_samples': 0.9773865906516956
+  
+  Gradient_Boosting:
+    'n_estimators': 166
+    'learning_rate': 0.09432095559137073
+    'max_depth': 10
+    'min_samples_split': 19
+    'min_samples_leaf': 6
+    'max_features': 'log2'
+    'loss': 'absolute_error'
