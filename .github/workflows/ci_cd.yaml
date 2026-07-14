@@ -35,7 +35,7 @@ jobs:
         env:
           DAGSHUB_USER_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
-          pytest tests/test_model_registry.py
+          pytest tests/test_model_registery.py
 
       - name: Test Model Performance
         env:
