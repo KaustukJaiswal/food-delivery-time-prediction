@@ -5,3 +5,4 @@ mlflow
 dagshub
 dvc
 joblib
+dvc[s3]
