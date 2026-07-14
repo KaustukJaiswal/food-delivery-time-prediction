@@ -122,7 +122,7 @@ if __name__ == "__main__":
     # mean cross val score
     mean_cv_score = -(cv_scores.mean())
     
-    # mlflow logging
+    # log through mlflow
     with mlflow.start_run() as run:
         # set tags
         mlflow.set_tag("model","Food Delivery Time Regressor")

@@ -6,3 +6,4 @@ dagshub
 dvc
 joblib
 dvc[s3]
+pytest
