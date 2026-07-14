@@ -1,8 +1,22 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-import missingno as msno
+
+
+columns_to_drop =  ['rider_id',
+                    'restaurant_latitude',
+                    'restaurant_longitude',
+                    'delivery_latitude',
+                    'delivery_longitude',
+                    'order_date',
+                    "order_time_hour",
+                    "order_day",
+                    "city_name",
+                    "order_day_of_week",
+                    "order_month"]
+def drop_columns(data: pd.DataFrame, columns: list) -> pd.DataFrame:
+    df = data.drop(columns=columns)
+    return df
 
 def change_column_names(data:pd.DataFrame)-> pd.DataFrame:
     return (data.rename({
@@ -15,8 +29,9 @@ def change_column_names(data:pd.DataFrame)-> pd.DataFrame:
  'Time_Order_picked': 'order_picked_time',
  'Weatherconditions':'weather',
  'Road_traffic_density':'traffic',
- 'City':'city_type',
- 'Time_taken(min)': 'time_taken'},axis=1
+ 'City':'city_type'
+#  'Time_taken(min)': 'time_taken'
+},axis=1
 ).rename(str.lower,axis=1)
 )
 
@@ -141,11 +156,10 @@ def data_cleaning(data:pd.DataFrame)->pd.DataFrame:
             festival = lambda x: x['festival'].str.rstrip().str.lower(),
             city_type = lambda x: x['city_type'].str.rstrip().str.lower(),
             multiple_deliveries = lambda x: x['multiple_deliveries'].astype(float),
-            time_taken = lambda x: (x['time_taken']
-                                    .str.replace("(min) ", "")
-                                    .astype(int)))
-        .drop(columns = ['order_time', 'order_picked_time'])
-        )
+            # time_taken = lambda x: (x['time_taken']
+            #                         .str.replace("(min) ", "")
+            #                         .astype(int))
+            ).drop(columns = ['order_time', 'order_picked_time']))
 
 def perform_data_cleaning(data:pd.DataFrame):
         d=(data
@@ -153,6 +167,8 @@ def perform_data_cleaning(data:pd.DataFrame):
         .pipe(data_cleaning)
         .pipe(clean_lat_long)
         .pipe(calculate_haversine_distance)
-        .pipe(create_distance_type))
-        d.to_csv("../data/raw/cleaned_data.csv",index=False)
+        .pipe(create_distance_type)
+        .pipe(drop_columns,columns=columns_to_drop))
+        return d.dropna()
+
         

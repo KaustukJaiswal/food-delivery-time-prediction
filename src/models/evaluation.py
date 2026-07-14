@@ -10,13 +10,10 @@ import json
 
 
 # initialize dagshub
-import dagshub
-dagshub.init(repo_owner='himanshu1703', 
-             repo_name='swiggy-delivery-time-prediction', 
-             mlflow=True)
+dagshub.init(repo_owner='KaustukJaiswal', repo_name='food-delivery-time-prediction', mlflow=True)
 
 # set the mlflow tracking server
-mlflow.set_tracking_uri("https://dagshub.com/himanshu1703/swiggy-delivery-time-prediction.mlflow")
+mlflow.set_tracking_uri("https://dagshub.com/KaustukJaiswal/food-delivery-time-prediction.mlflow")
 
 # set mlflow experment name
 mlflow.set_experiment("DVC Pipeline")
@@ -60,9 +57,10 @@ def load_model(model_path: Path):
     return model
 
 
-def save_model_info(save_json_path,run_id, artifact_path, model_name):
+def save_model_info(save_json_path,run_id,model_id, artifact_path, model_name):
     info_dict = {
         "run_id": run_id,
+        "model_id": model_id,
         "artifact_path": artifact_path,
         "model_name": model_name
     }
@@ -155,7 +153,12 @@ if __name__ == "__main__":
                                     model_output=model.predict(X_train.sample(20,random_state=42)))
         
         # log the final model
-        mlflow.sklearn.log_model(model,"delivery_time_pred_model",signature=model_signature)
+        model_info = mlflow.sklearn.log_model(
+            sk_model=model,
+            name="delivery_time_pred_model",
+            signature=model_signature,
+            serialization_format="cloudpickle"
+            )
 
         # log stacking regressor
         mlflow.log_artifact(root_path / "models" / "stacking_regressor.joblib")
@@ -179,11 +182,10 @@ if __name__ == "__main__":
     save_json_path = root_path / "run_information.json"
     save_model_info(save_json_path=save_json_path,
                     run_id=run_id,
+                    model_id=model_info.model_id,
                     artifact_path=artifact_uri,
                     model_name=model_name)
     logger.info("Model Information saved")
     
-    
-    
-    
+
     
