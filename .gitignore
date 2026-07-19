@@ -87,3 +87,5 @@ target/
 # Mypy cache
 .mypy_cache/
 /run_information.json
+
+gdrive-service-account.json

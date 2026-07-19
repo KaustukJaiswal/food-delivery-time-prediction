@@ -1,4 +1,4 @@
 [core]
-    remote = myremote
-['remote "myremote"']
-    url = s3://mlops-delivery-time-prediction
+    remote = origin
+['remote "origin"']
+    url = https://dagshub.com/KaustukJaiswal/food-delivery-time-prediction.dvc
