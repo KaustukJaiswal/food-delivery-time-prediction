@@ -1,7 +1,7 @@
 # set the base image
 FROM python:3.12-slim
 
-# install lightgbm dependency
+# install dependency
 RUN apt-get update 
 
 # set up the working directory
